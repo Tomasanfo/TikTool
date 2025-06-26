@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 from selenium.common.exceptions import TimeoutException
 from utils.captcha import CaptchaWindow
 from colorama import init, Fore
@@ -35,16 +36,20 @@ def openTiktokSites():
     global zefoy_driver
     global nreer_driver
     logo()
-    print("""    COMPLETE THE 2 CAPTCHAS THAT APPEAR ON YOUR SCREEN.
-    IF YOU GET THE SECOND WRONG, RESTART THE PROGRAM.""")
+    print("    [Bypass activado] Saltando CAPTCHAs.")
+    
     zefoy_options = uc.ChromeOptions()
     nreer_options = uc.ChromeOptions()
-    zefoy_options.add_argument("--headless")
-    nreer_options.add_argument("--headless")
+    
+    # ✖ Desactivamos headless para ver el navegador
+    # zefoy_options.add_argument("--headless")
+    # nreer_options.add_argument("--headless")
+    
     zefoy_options.add_argument("--disable-notifications")
     nreer_options.add_argument("--disable-notifications")
+
     zefoy_driver = uc.Chrome(options=zefoy_options)
-    nreer_driver = uc.Chrome(options=nreer_options)    
+    nreer_driver = uc.Chrome(options=nreer_options)  
     try:
         zefoy_driver.execute_cdp_cmd("Network.setBlockedURLs", {"urls": ["https://fundingchoicesmessages.google.com/*"]})
         zefoy_driver.execute_cdp_cmd("Network.enable", {})
@@ -73,10 +78,6 @@ def openTiktokSites():
         print("    Error communication with Nreer")
         nreer_driver.quit()
     chooseTiktok()
-    
-    
-    
-    
 
 def nreerCaptcha():
     global nreer_driver
@@ -88,8 +89,6 @@ def nreerCaptcha():
     inputBox.send_keys(solutionNreer)
     time.sleep(1)
     submit = nreer_driver.find_element(By.XPATH, "//button[contains(@class, 'btn-dark') and contains(@class, 'btn-block')]").click()
-
-
 
 def zefoyCaptcha():
     """Original captcha function structure."""
@@ -144,7 +143,6 @@ def zefoyCaptcha():
     print("    Failed to solve captcha after multiple attempts.")
     return False 
 
-
 def captchaSaveZefoy(is_retry=False):
     """Original captchaSave function structure."""
     global zefoy_driver
@@ -179,7 +177,6 @@ def captchaSaveNreer(is_retry=False):
     except Exception as e:
         print(f"    Error capturing CAPTCHA: {e}")
         return None
-
 
 def chooseSocial():
     os.system('cls')
@@ -273,12 +270,10 @@ def chooseTiktok():
     else:
         chooseTiktok()
 
-
-
-
 def viewBot():
     global URL
     viewStats = 0
+    zefoy_input.clear()
     zefoy_input.send_keys(URL)
     while True:
         os.system('cls')
@@ -299,7 +294,7 @@ def viewBot():
         try:
             use_button = nreer_driver.find_element(By.XPATH, '/html/body/main/div[1]/div/div[2]/div/div[1]/div[3]/div/div/button').click()
             time.sleep(3)
-            enterURL = enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
+            enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
             enterURL.send_keys(URL)
             time.sleep(1)
             search = nreer_driver.find_element(By.XPATH, '//*[@id="form1"]/div/div/button').click()
@@ -311,13 +306,10 @@ def viewBot():
         except:
             time.sleep(1)
 
-                    
-    
-
-    
 def likeBot():
     global URL
     likeStats = 0
+    zefoy_input.clear()
     zefoy_input.send_keys(URL)
     while True:
         os.system('cls')
@@ -339,7 +331,7 @@ def likeBot():
         try:
             use_button = nreer_driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary.btn-lg.btn-block').click()
             time.sleep(3)
-            enterURL = enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
+            enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
             enterURL.send_keys(URL)
             time.sleep(1)
             search = nreer_driver.find_element(By.XPATH, '//*[@id="form1"]/div/div/button').click()
@@ -351,10 +343,10 @@ def likeBot():
         except:
             time.sleep(1)
 
-    
 def shareBot():
     global URL
     shareStats = 0
+    zefoy_input.clear()
     zefoy_input.send_keys(URL)
     while True:
         os.system('cls')
@@ -375,7 +367,7 @@ def shareBot():
         try:
             use_button = nreer_driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary.btn-lg.btn-block').click()
             time.sleep(3)
-            enterURL = enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
+            enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
             enterURL.send_keys(URL)
             time.sleep(1)
             search = nreer_driver.find_element(By.XPATH, '//*[@id="form1"]/div/div/button').click()
@@ -385,11 +377,11 @@ def shareBot():
             shareStats += 200
         except:
             time.sleep(1)
-    
 
 def favouriteBot():
     global URL
     favStats = 0
+    zefoy_input.clear()
     zefoy_input.send_keys(URL)
     while True:
         os.system('cls')
@@ -402,7 +394,7 @@ def favouriteBot():
             try:
                 target_button = zefoy_driver.find_element(By.XPATH, '/html/body/div[12]/div/div/div[1]/div/form/button')
                 target_button.click()
-                favouriteStats += 90
+                favStats += 90
             except:
                 time.sleep(3)
         except:
@@ -410,22 +402,19 @@ def favouriteBot():
         try:
             use_button = nreer_driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary.btn-lg.btn-block').click()
             time.sleep(3)
-            enterURL = enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
+            enterURL = nreer_driver.find_element(By.CSS_SELECTOR, '.form-control.form-control-lg')
             enterURL.send_keys(URL)
             time.sleep(1)
             search = nreer_driver.find_element(By.XPATH, '//*[@id="form1"]/div/div/button').click()
             time.sleep(2)
             shareButton = nreer_driver.find_element(By.XPATH, '/html/body/main/div[1]/div/div[2]/div/div/div[1]/button[6]').click()
             close = nreer_driver.find_element(By.XPATH, '/*[@id="bootstrap-show-modal-0"]/div/div/div[1]/button').click()
-            favouriteStats += 100
+            favStats += 100
         except:
                 time.sleep(1)
 
-    
-
 def commentBot():
     os.system('cls')
-
 
 os.system('cls')
 os.system("title TikTool v1.6 │ LEAVE A STAR FOR UPDATES!")
